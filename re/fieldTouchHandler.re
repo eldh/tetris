@@ -51,7 +51,7 @@ let make = (~moveX, ~rotate, ~moveY, children) => {
         ReasonReact.Update({...state, lastMoveCoord: Some(thisCoord)});
       switch dir {
       | X =>
-        xLastMove -. xNow > pieceWidth ?
+        xLastMove -. xNow > pieceWidth /. 1.5 ?
           {
             moveX(Direction.Left);
             updateCoord();

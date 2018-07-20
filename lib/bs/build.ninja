@@ -1,16 +1,16 @@
 bs_package_flags = -bs-package-name jour
-src_root_dir = /Users/eldh/Code/jour
-bsc = /Users/eldh/Code/jour/node_modules/bs-platform/lib/bsc.exe
-bsdep = /Users/eldh/Code/jour/node_modules/bs-platform/lib/bsb_helper.exe
+src_root_dir = /Users/eldh/Code/tetris
+bsc = /Users/eldh/Code/tetris/node_modules/bs-platform/lib/bsc.exe
+bsdep = /Users/eldh/Code/tetris/node_modules/bs-platform/lib/bsb_helper.exe
 warnings = -w -30-40+6+7+27+32..39+44+45+101
-bsc_flags = -nostdlib -I '/Users/eldh/Code/jour/node_modules/bs-platform/lib/ocaml' -bs-super-errors -no-alias-deps -color always
+bsc_flags = -nostdlib -I '/Users/eldh/Code/tetris/node_modules/bs-platform/lib/ocaml' -bs-super-errors -no-alias-deps -color always
 ppx_flags = 
-bs_package_includes = -I /Users/eldh/Code/jour/node_modules/bs-react-native/lib/ocaml -I /Users/eldh/Code/jour/node_modules/reason-react/lib/ocaml
+bs_package_includes = -I /Users/eldh/Code/tetris/node_modules/bs-react-native/lib/ocaml -I /Users/eldh/Code/tetris/node_modules/bs-react-native/node_modules/reason-react/lib/ocaml
 bs_package_dev_includes = 
 namespace = 
 bsb_dir_group = 0
-refmt = /Users/eldh/Code/jour/node_modules/bs-platform/lib/refmt.exe
-reason_react_jsx = -ppx '/Users/eldh/Code/jour/node_modules/bs-platform/lib/reactjs_jsx_ppx_2.exe'
+refmt = /Users/eldh/Code/tetris/node_modules/bs-platform/lib/refmt.exe
+reason_react_jsx = -ppx '/Users/eldh/Code/tetris/node_modules/bs-platform/lib/reactjs_jsx_ppx_2.exe'
 refmt_flags = --print binary
 bsc_lib_includes = -I re
 rule build_ast_and_module_sets_from_re
