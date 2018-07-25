@@ -1,1 +1,1 @@
-re/field.cmj : re/direction.cmj re/fieldTouchHandler.cmj re/piece.cmj re/pixel.cmj
+re/field.cmj : re/direction.cmj re/fieldTouchHandler.cmj re/level.cmj re/piece.cmj re/pixel.cmj re/score.cmj

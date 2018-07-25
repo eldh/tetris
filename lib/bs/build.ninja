@@ -5,7 +5,7 @@ bsdep = /Users/eldh/Code/tetris/node_modules/bs-platform/lib/bsb_helper.exe
 warnings = -w -30-40+6+7+27+32..39+44+45+101
 bsc_flags = -nostdlib -I '/Users/eldh/Code/tetris/node_modules/bs-platform/lib/ocaml' -bs-super-errors -no-alias-deps -color always
 ppx_flags = 
-bs_package_includes = -I /Users/eldh/Code/tetris/node_modules/bs-react-native/lib/ocaml -I /Users/eldh/Code/tetris/node_modules/bs-react-native/node_modules/reason-react/lib/ocaml
+bs_package_includes = -I /Users/eldh/Code/tetris/node_modules/bs-react-native/lib/ocaml -I /Users/eldh/Code/tetris/node_modules/reason-react/lib/ocaml
 bs_package_dev_includes = 
 namespace = 
 bsb_dir_group = 0
@@ -33,6 +33,11 @@ build re/field.mlast.d : build_deps re/field.mlast
 build re/field.cmj |  $src_root_dir/lib/js/re/field.js re/field.cmi : build_cmj_cmi re/field.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
+build re/level.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/level.re
+build re/level.mlast.d : build_deps re/level.mlast
+build re/level.cmj |  $src_root_dir/lib/js/re/level.js re/level.cmi : build_cmj_cmi re/level.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
 build re/piece.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/piece.re
 build re/piece.mlast.d : build_deps re/piece.mlast
 build re/piece.cmj |  $src_root_dir/lib/js/re/piece.js re/piece.cmi : build_cmj_cmi re/piece.mlast
@@ -43,14 +48,19 @@ build re/pixel.mlast.d : build_deps re/pixel.mlast
 build re/pixel.cmj |  $src_root_dir/lib/js/re/pixel.js re/pixel.cmi : build_cmj_cmi re/pixel.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
-build re/memoize.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/memoize.re
-build re/memoize.mlast.d : build_deps re/memoize.mlast
-build re/memoize.cmj |  $src_root_dir/lib/js/re/memoize.js re/memoize.cmi : build_cmj_cmi re/memoize.mlast
+build re/score.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/score.re
+build re/score.mlast.d : build_deps re/score.mlast
+build re/score.cmj |  $src_root_dir/lib/js/re/score.js re/score.cmi : build_cmj_cmi re/score.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
 build re/direction.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/direction.re
 build re/direction.mlast.d : build_deps re/direction.mlast
 build re/direction.cmj |  $src_root_dir/lib/js/re/direction.js re/direction.cmi : build_cmj_cmi re/direction.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
+build re/whiteText.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/whiteText.re
+build re/whiteText.mlast.d : build_deps re/whiteText.mlast
+build re/whiteText.cmj |  $src_root_dir/lib/js/re/whiteText.js re/whiteText.cmi : build_cmj_cmi re/whiteText.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
 build re/nice_prefix.mlast : build_ast_and_module_sets_from_re $src_root_dir/re/nice_prefix.re
@@ -63,4 +73,4 @@ build re/fieldTouchHandler.mlast.d : build_deps re/fieldTouchHandler.mlast
 build re/fieldTouchHandler.cmj |  $src_root_dir/lib/js/re/fieldTouchHandler.js re/fieldTouchHandler.cmi : build_cmj_cmi re/fieldTouchHandler.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/re
-build build.ninja : phony  ||  re/fieldTouchHandler.mlast.d re/nice_prefix.mlast.d re/direction.mlast.d re/memoize.mlast.d re/pixel.mlast.d re/piece.mlast.d re/field.mlast.d re/App.mlast.d
+build build.ninja : phony  ||  re/fieldTouchHandler.mlast.d re/nice_prefix.mlast.d re/whiteText.mlast.d re/direction.mlast.d re/score.mlast.d re/pixel.mlast.d re/piece.mlast.d re/level.mlast.d re/field.mlast.d re/App.mlast.d

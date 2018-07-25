@@ -1,5 +1,7 @@
 open BsReactNative;
 
+exception ImpossibleLines;
+
 type positionedPiece = {
   piece: Piece.t,
   y: int,
@@ -22,7 +24,9 @@ type state = {
   gameOver: bool,
   activePiece: positionedPiece,
   nextPiece: Piece.t,
-  filled: list(list(filledPixel))
+  filled: list(list(filledPixel)),
+  score: int,
+  level: int,
 };
 
 type action =
@@ -37,6 +41,19 @@ let boardHeight = 20;
 let boardWidth = 10;
 
 let windowWidth = Dimensions.get(`window)##width;
+
+let getMoveScore = (level, lines) => {
+  let multiplier =
+    switch lines {
+    | 0 => 0
+    | 1 => 40
+    | 2 => 100
+    | 3 => 300
+    | 4 => 1200
+    | _ => raise(ImpossibleLines)
+    };
+  multiplier * (level + 1);
+};
 
 let coordinatesForPiece = ({piece, rotation, y, x}) => {
   let rotatedPosition = List.nth(Piece.getPositionsForPeice(piece), rotation);
@@ -115,8 +132,6 @@ let newForRow = (index, coords) => List.filter(({y}) => y === index, coords);
 
 let pixelToFilled = ({x, piece}) => {x, piece};
 
-let filledToPixel = (y, {x, piece}) => {y, x, piece};
-
 let addActiveToFilled = ({activePiece, filled}) => {
   let newCoords = pieceToPixels(activePiece);
   filled
@@ -126,24 +141,13 @@ let addActiveToFilled = ({activePiece, filled}) => {
   |> List.filter(row => List.length(row) !== boardWidth);
 };
 
-/* List.append
-   (pieceToPixels(activePiece), filled); */
-/* let newList = List.append(pieceToPixels(activePiece), filled);
-   let fullRows =
-     List.fold_left(
-       (rows, piece) => {
-         rows[piece.y] = rows[piece.y] + 1;
-         rows;
-       },
-       Array.make(20, 0),
-       newList
-     );
-   newList |> List.filter(pixel => fullRows[pixel.y] !== 10); */
 let component = ReasonReact.reducerComponent("Field");
 
 let make = _children => {
   ...component,
   initialState: () => {
+    score: 0,
+    level: 0,
     gameOver: false,
     activePiece: positionedPiece(Piece.createPiece()),
     nextPiece: Piece.createPiece(),
@@ -162,6 +166,7 @@ let make = _children => {
           (self => self.send(canMoveY(self.state) ? MoveY : NewPiece))
         )
     | NewPiece =>
+      let filled = addActiveToFilled(state);
       ReasonReact.Update(
         isDead(state.activePiece, state.filled) ?
           {...state, gameOver: true} :
@@ -169,7 +174,8 @@ let make = _children => {
             ...state,
             nextPiece: Piece.createPiece(),
             activePiece: positionedPiece(state.nextPiece),
-            filled: addActiveToFilled(state)
+            filled,
+            score: state.score + (1 |> getMoveScore(state.level))
           }
       )
     | Rotate =>
@@ -212,7 +218,7 @@ let make = _children => {
         }) :
         ReasonReact.NoUpdate
     },
-  render: ({send, state: {activePiece, gameOver, filled}}) => {
+  render: ({send, state: {score, level, activePiece, gameOver, filled}}) => {
     let boardAspectRatio = float_of_int(boardHeight / boardWidth);
     <SafeAreaView
       style=Style.(
@@ -266,6 +272,8 @@ let make = _children => {
             )
           </FieldTouchHandler>
       )
+      <Score score={score} />
+      <Level level={level} />
     </SafeAreaView>;
   }
 };
