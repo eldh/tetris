@@ -10,7 +10,7 @@ type t =
   | Square;
 
 let rec listPiecesRec = arr =>
-  switch arr {
+  switch (arr) {
   | [] => listPiecesRec([RightS])
   | [RightS, ..._] => listPiecesRec([LeftS, ...arr])
   | [LeftS, ..._] => listPiecesRec([RightL, ...arr])
@@ -24,7 +24,7 @@ let rec listPiecesRec = arr =>
 let listPieces = listPiecesRec([]);
 
 let getStringForPeice = piece =>
-  switch piece {
+  switch (piece) {
   | RightS => "RightS"
   | LeftS => "LeftS"
   | LeftL => "LeftL"
@@ -34,7 +34,7 @@ let getStringForPeice = piece =>
   | T => "T"
   };
 let getColorForPeice = piece =>
-  switch piece {
+  switch (piece) {
   | RightS => "teal"
   | LeftS => "green"
   | LeftL => "blue"
@@ -51,7 +51,7 @@ let numberOfPieces = List.length(listPieces);
 let createPiece = () => List.nth(listPieces, Random.int(numberOfPieces));
 
 let getPositionsForPeice = piece =>
-  switch piece {
+  switch (piece) {
   | RightS => [
       /*
             0 X
@@ -72,7 +72,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), ((-1), (-1)), (0, (-1)), (1, 0)],
       [(0, 0), (0, 1), (1, 0), (1, (-1))],
       [(0, 0), ((-1), 0), (0, 1), (1, 1)],
-      [(0, 0), ((-1), 1), ((-1), 0), (0, (-1))]
+      [(0, 0), ((-1), 1), ((-1), 0), (0, (-1))],
     ]
   | LeftS => [
       /*
@@ -94,7 +94,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), ((-1), 0), (0, (-1)), (1, (-1))],
       [(0, 0), (0, 1), ((-1), 0), ((-1), (-1))],
       [(0, 0), ((-1), 1), (0, 1), (1, 0)],
-      [(0, 0), (1, 1), (1, 0), (0, (-1))]
+      [(0, 0), (1, 1), (1, 0), (0, (-1))],
     ]
   | LeftL => [
       /*
@@ -116,7 +116,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), ((-1), 0), (0, 1), (0, 2)],
       [(0, 0), (0, 1), (1, 0), (2, 0)],
       [(0, 0), (0, (-2)), (0, (-1)), (1, 0)],
-      [(0, 0), ((-2), 0), ((-1), 0), (0, (-1))]
+      [(0, 0), ((-2), 0), ((-1), 0), (0, (-1))],
     ]
   | Square => [
       /*
@@ -135,7 +135,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), (0, 1), (1, 0), (1, 1)],
       [(0, 0), (0, 1), (1, 0), (1, 1)],
       [(0, 0), (0, 1), (1, 0), (1, 1)],
-      [(0, 0), (0, 1), (1, 0), (1, 1)]
+      [(0, 0), (0, 1), (1, 0), (1, 1)],
     ]
   | Long => [
       /*
@@ -147,7 +147,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), (0, (-1)), (0, 1), (0, 2)],
       [(0, 0), ((-1), 0), (1, 0), (2, 0)],
       [(0, 0), (0, (-2)), (0, (-1)), (0, 1)],
-      [(0, 0), ((-2), 0), ((-1), 0), (1, 0)]
+      [(0, 0), ((-2), 0), ((-1), 0), (1, 0)],
     ]
   | RightL => [
       /*
@@ -168,7 +168,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), (0, 1), (0, 2), (1, 0)],
       [(0, 0), (0, (-1)), (1, 0), (2, 0)],
       [(0, 0), ((-1), 0), (0, (-1)), (0, (-2))],
-      [(0, 0), ((-2), 0), ((-1), 0), (0, 1)]
+      [(0, 0), ((-2), 0), ((-1), 0), (0, 1)],
     ]
   | T => [
       /*
@@ -190,7 +190,7 @@ let getPositionsForPeice = piece =>
       [(0, 0), ((-1), 0), (0, 1), (1, 0)],
       [(0, 0), (0, 1), (1, 0), (0, (-1))],
       [(0, 0), ((-1), 0), (1, 0), (0, (-1))],
-      [(0, 0), ((-1), 0), (0, 1), (0, (-1))]
+      [(0, 0), ((-1), 0), (0, 1), (0, (-1))],
     ]
   };
 
@@ -211,9 +211,9 @@ let make = (~piece, ~rotation, ~pos, _children) => {
       |> List.mapi(renderPart(pos, piece));
     <View
       style=Style.(
-              style([width(Pct(100.)), height(Pct(100.)), position(Absolute)])
-            )>
+        style([width(Pct(100.)), height(Pct(100.)), position(Absolute)])
+      )>
       (ReasonReact.array(Array.of_list(comps)))
     </View>;
-  }
+  },
 };

@@ -7,5 +7,5 @@ let make = (~styles, children) => {
   render: _self =>
     <Text style=Style.(combine(style([color(String("#ffffff"))]), styles))>
       ...children
-    </Text>
+    </Text>,
 };

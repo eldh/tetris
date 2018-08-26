@@ -11,7 +11,7 @@ type dir =
 type state = {
   start: option(coord),
   lastMoveCoord: option(coord),
-  pos: option(coord)
+  pos: option(coord),
 };
 
 type action =
@@ -31,11 +31,13 @@ let make = (~moveX, ~rotate, ~moveY, children) => {
   ...component,
   initialState: () => {start: None, pos: None, lastMoveCoord: None},
   reducer: (action, state) =>
-    switch action {
+    switch (action) {
     | Move(thisCoord) =>
       let (xNow, yNow) = thisCoord;
+      Js.log2("thisCoord", thisCoord);
+
       let start =
-        switch state.start {
+        switch (state.start) {
         | None => raise(Stupid("Start should really be set here"))
         | Some(t) => t
         };
@@ -43,13 +45,13 @@ let make = (~moveX, ~rotate, ~moveY, children) => {
       let dir =
         abs_float(xStart -. xNow) -. abs_float(yStart -. yNow) > 0. ? X : Y;
       let (xLastMove, yLastMove) =
-        switch state.lastMoveCoord {
+        switch (state.lastMoveCoord) {
         | None => start
         | Some(v) => v
         };
       let updateCoord = () =>
         ReasonReact.Update({...state, lastMoveCoord: Some(thisCoord)});
-      switch dir {
+      switch (dir) {
       | X =>
         xLastMove -. xNow > pieceWidth /. 1.5 ?
           {
@@ -84,23 +86,23 @@ let make = (~moveX, ~rotate, ~moveY, children) => {
       responderHandlers={
         onMoveShouldSetResponder:
           Some(
-            (_) => {
+            _ => {
               Js.log("onMoveShouldSetResponder");
               true;
-            }
+            },
           ),
-        onStartShouldSetResponder: Some((_) => true),
-        onMoveShouldSetResponderCapture: Some((_) => true),
+        onStartShouldSetResponder: Some(_ => true),
+        onMoveShouldSetResponderCapture: Some(_ => true),
         onResponderGrant: Some(e => self.send(Start(coord(e)))),
         onResponderMove: Some(e => self.send(Move(coord(e)))),
-        onResponderReject: Some((_) => Js.log("reject")),
+        onResponderReject: Some(_ => Js.log("reject")),
         onResponderRelease: Some(e => self.send(End(coord(e)))),
-        onResponderTerminate: Some((_) => Js.log("terminate")),
+        onResponderTerminate: Some(_ => Js.log("terminate")),
         onResponderTerminationRequest:
-          Some((_) => Js.log("terminationrequest")),
-        onStartShouldSetResponderCapture: Some((_) => true)
+          Some(_ => Js.log("terminationrequest")),
+        onStartShouldSetResponderCapture: Some(_ => true),
       }
       style=Style.(style([position(Relative), display(Flex), flex(1.)]))>
       ...children
-    </View>
+    </View>,
 };
